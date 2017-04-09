@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Monster</string>
+    <string name="title_activity_create_monster">CreateMonster</string>
+    <string name="title_activity_search_monsters">SearchMonsters</string>
+    <string name="title_activity_view_monster">ViewMonster</string>
+    <string name="feedback_monster_created">New monster has been created</string>
+    <string name="feedback_monster_updated">Monster has been updated</string>
+</resources>
