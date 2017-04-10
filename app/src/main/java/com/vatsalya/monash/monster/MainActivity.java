@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.vatsalya.monash.monster.models.Monster;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button createMonsterButton;
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ViewMonster.class);
+                Monster monster = new Monster();
+                intent.putExtra(getString(R.string.monster_parcel_id), monster);
                 startActivity(intent);
             }
         });

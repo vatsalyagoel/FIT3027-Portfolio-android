@@ -8,4 +8,5 @@
     tools:context="com.vatsalya.monash.monster.SearchMonsters"
     tools:showIn="@layout/activity_search_monsters">
 
+
 </android.support.constraint.ConstraintLayout>

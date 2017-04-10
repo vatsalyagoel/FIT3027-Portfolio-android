@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Locale;
-import java.util.UUID;
 
 /**
  * Created by vatsalyagoel on 10/4/17.
@@ -12,7 +11,7 @@ import java.util.UUID;
 
 public class Monster implements Parcelable {
 
-    private String id;
+    private long id;
     private String name;
     private int age;
     private String species;
@@ -20,8 +19,8 @@ public class Monster implements Parcelable {
     private int health;
 
     public Monster() {
-        this.id = "Default";
-        this.name = "Default USer";
+        this.id = 0;
+        this.name = "Default User";
         this.age = 0;
         this.species = "Human";
         this.attackPower = 0;
@@ -29,7 +28,6 @@ public class Monster implements Parcelable {
     }
 
     public Monster(String name, int age, String species, int attackPower, int health) {
-        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.age = age;
         this.species = species;
@@ -38,7 +36,7 @@ public class Monster implements Parcelable {
     }
 
     private Monster(Parcel in) {
-        this.id = in.readString();
+        this.id = in.readLong();
         this.name = in.readString();
         this.age = in.readInt();
         this.species = in.readString();
@@ -46,11 +44,11 @@ public class Monster implements Parcelable {
         this.health = in.readInt();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -101,7 +99,7 @@ public class Monster implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(getId());
+        dest.writeLong(getId());
         dest.writeString(getName());
         dest.writeInt(getAge());
         dest.writeString(getSpecies());

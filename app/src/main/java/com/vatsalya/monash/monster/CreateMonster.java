@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.vatsalya.monash.monster.models.Monster;
+import com.vatsalya.monash.monster.utils.DatabaseHelper;
 
 public class CreateMonster extends AppCompatActivity {
 
@@ -29,12 +30,15 @@ public class CreateMonster extends AppCompatActivity {
 
     private Monster monster;
 
+    private DatabaseHelper databaseHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_monster);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        databaseHelper = new DatabaseHelper(this);
 
         nameEditText = (EditText) findViewById(R.id.nameEditText);
         ageEditText = (EditText) findViewById(R.id.ageEditText);
@@ -74,8 +78,15 @@ public class CreateMonster extends AppCompatActivity {
                 Integer.parseInt(attackPowerEditText.getText().toString()),
                 Integer.parseInt(healthEditText.getText().toString())
         );
-        decriptionTextView.setText(monster.toString());
-        feedbackTextView.setText(getString(R.string.feedback_monster_created));
+        long id = databaseHelper.addMonster(monster);
+        if (id != -1) {
+            monster.setId(id);
+            decriptionTextView.setText(monster.toString());
+            feedbackTextView.setText(getString(R.string.feedback_monster_created));
+        } else {
+            feedbackTextView.setText(getString(R.string.feedback_monster_failed));
+        }
+
     }
 
     private void updateMonster() {
@@ -84,7 +95,7 @@ public class CreateMonster extends AppCompatActivity {
         monster.setSpecies(speciesEditText.getText().toString());
         monster.setAttackPower(Integer.parseInt(attackPowerEditText.getText().toString()));
         monster.setHealth(Integer.parseInt(healthEditText.getText().toString()));
-
+        databaseHelper.updateMonster(monster);
         decriptionTextView.setText("");
         feedbackTextView.setText(getString(R.string.feedback_monster_updated));
     }
