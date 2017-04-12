@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -38,6 +39,11 @@ public class SearchMonsters extends AppCompatActivity {
         setContentView(R.layout.activity_search_monsters);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         databaseHelper = new DatabaseHelper(this);
         mainMonsterList = new ArrayList<>(databaseHelper.getAllMonsters());
@@ -58,6 +64,7 @@ public class SearchMonsters extends AppCompatActivity {
 
         updateListCount();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,6 +96,20 @@ public class SearchMonsters extends AppCompatActivity {
         });
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.create_monster:
+                Intent intent = new Intent(SearchMonsters.this, CreateMonster.class);
+                intent.putExtra(getString(R.string.sender_class_name), this.getClass().getSimpleName());
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void updateListCount() {

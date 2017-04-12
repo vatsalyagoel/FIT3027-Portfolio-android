@@ -7,6 +7,7 @@
     <string name="feedback_monster_updated">Monster has been updated</string>
     <string name="feedback_monster_failed">Monster could not be saved</string>
     <string name="monster_parcel_id">monster_parcel_id</string>
+    <string name="sender_class_name">sender_class_name</string>
     <string name="DATABASE_NAME">monsterDB</string>
     <string name="TABLE_MONSTER">monster</string>
     <string name="KEY_ID">id</string>

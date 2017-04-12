@@ -1,5 +1,7 @@
 package com.vatsalya.monash.monster;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -29,8 +31,9 @@ public class CreateMonster extends AppCompatActivity {
     private TextView feedbackTextView;
 
     private Monster monster;
-
+    private String callerName;
     private DatabaseHelper databaseHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +55,19 @@ public class CreateMonster extends AppCompatActivity {
         decriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         feedbackTextView = (TextView) findViewById(R.id.feedbackTextView);
 
+        Intent intent = getIntent();
+        monster = intent.getParcelableExtra(getString(R.string.monster_parcel_id));
+        callerName = intent.getStringExtra(getString(R.string.sender_class_name));
+
+        if( callerName.equals( "CreateMonster"))
+        {
+            updateButton.setVisibility(View.INVISIBLE);
+        }
+        if(callerName.equals("ViewMonster"))
+        {
+            saveButton.setVisibility(View.INVISIBLE);
+        }
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,15 +76,30 @@ public class CreateMonster extends AppCompatActivity {
             } else {
                 createMonster();
             }
+            if(callerName.equals("ViewMonster")) {
+                finish();
+            }
             }
         });
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            createMonster();
+                createMonster();
+                if(callerName.equals("CreateMonster")) {
+                    finish();
+                }
             }
         });
+
+
+        if (monster != null) {
+            nameEditText.setText(monster.getName());
+            ageEditText.setText(Integer.toString(monster.getAge()));
+            speciesEditText.setText(monster.getSpecies());
+            attackPowerEditText.setText(Integer.toString(monster.getAttackPower()));
+            healthEditText.setText(Integer.toString(monster.getHealth()));
+        }
     }
 
     private void createMonster() {
@@ -99,5 +130,4 @@ public class CreateMonster extends AppCompatActivity {
         decriptionTextView.setText("");
         feedbackTextView.setText(getString(R.string.feedback_monster_updated));
     }
-
 }
