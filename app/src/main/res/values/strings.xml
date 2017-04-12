@@ -15,4 +15,5 @@
     <string name="KEY_SPECIES">species</string>
     <string name="KEY_ATTACK_POWER">attackPower</string>
     <string name="KEY_HEALTH">health</string>
+    <string name="search_title">Search</string>
 </resources>

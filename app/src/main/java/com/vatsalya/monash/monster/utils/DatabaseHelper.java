@@ -3,6 +3,7 @@ package com.vatsalya.monash.monster.utils;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -105,6 +106,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Monster monster = new Monster(cursor.getString(1), Integer.parseInt(cursor.getString(2)),
+                        cursor.getString(3), Integer.parseInt(cursor.getString(2)),
+                        Integer.parseInt(cursor.getString(2))
+                );
+                monster.setId(Integer.parseInt(cursor.getString(0)));
+                // Adding contact to list
+                monsterList.add(monster);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return monsterList;
+    }
+
+    public List<Monster> searchMonstersWithName(String queryString) {
+        List<Monster> monsterList = new ArrayList<Monster>();
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.query(TABLE_MONSTER , new String[] { KEY_ID,
+                KEY_NAME, KEY_AGE, KEY_SPECIES, KEY_ATTACK_POWER, KEY_HEALTH }, KEY_NAME + " LIKE ?",
+                new String[] {"%"+ DatabaseUtils.sqlEscapeString(queryString) + "%" }, null, null, null, null );
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
