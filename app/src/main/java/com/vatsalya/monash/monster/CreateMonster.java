@@ -1,11 +1,7 @@
 package com.vatsalya.monash.monster;
 
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -27,7 +23,7 @@ public class CreateMonster extends AppCompatActivity {
     private Button updateButton;
     private Button saveButton;
 
-    private TextView decriptionTextView;
+    private TextView descriptionTextView;
     private TextView feedbackTextView;
 
     private Monster monster;
@@ -52,18 +48,18 @@ public class CreateMonster extends AppCompatActivity {
         updateButton = (Button) findViewById(R.id.updateButton);
         saveButton = (Button) findViewById(R.id.saveButton);
 
-        decriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
+        descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         feedbackTextView = (TextView) findViewById(R.id.feedbackTextView);
 
         Intent intent = getIntent();
         monster = intent.getParcelableExtra(getString(R.string.monster_parcel_id));
         callerName = intent.getStringExtra(getString(R.string.sender_class_name));
 
-        if( callerName.equals( "CreateMonster"))
+        if( callerName != null && callerName.equals( "CreateMonster"))
         {
             updateButton.setVisibility(View.INVISIBLE);
         }
-        if(callerName.equals("ViewMonster"))
+        if(callerName != null && callerName.equals("ViewMonster"))
         {
             saveButton.setVisibility(View.INVISIBLE);
         }
@@ -76,7 +72,7 @@ public class CreateMonster extends AppCompatActivity {
             } else {
                 createMonster();
             }
-            if(callerName.equals("ViewMonster")) {
+            if(callerName != null && callerName.equals("ViewMonster")) {
                 finish();
             }
             }
@@ -86,7 +82,7 @@ public class CreateMonster extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createMonster();
-                if(callerName.equals("CreateMonster")) {
+                if(callerName != null && callerName.equals("CreateMonster")) {
                     finish();
                 }
             }
@@ -112,7 +108,7 @@ public class CreateMonster extends AppCompatActivity {
         long id = databaseHelper.addMonster(monster);
         if (id != -1) {
             monster.setId(id);
-            decriptionTextView.setText(monster.toString());
+            descriptionTextView.setText(monster.toString());
             feedbackTextView.setText(getString(R.string.feedback_monster_created));
         } else {
             feedbackTextView.setText(getString(R.string.feedback_monster_failed));
@@ -127,7 +123,7 @@ public class CreateMonster extends AppCompatActivity {
         monster.setAttackPower(Integer.parseInt(attackPowerEditText.getText().toString()));
         monster.setHealth(Integer.parseInt(healthEditText.getText().toString()));
         databaseHelper.updateMonster(monster);
-        decriptionTextView.setText("");
+        descriptionTextView.setText("");
         feedbackTextView.setText(getString(R.string.feedback_monster_updated));
     }
 }

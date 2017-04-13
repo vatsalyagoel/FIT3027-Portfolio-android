@@ -94,7 +94,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 Integer.parseInt(cursor.getString(2))
         );
         monster.setId(Integer.parseInt(cursor.getString(0)));
-        // return contact
+
         return monster;
     }
 
@@ -115,12 +115,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Integer.parseInt(cursor.getString(2))
                 );
                 monster.setId(Integer.parseInt(cursor.getString(0)));
-                // Adding contact to list
+                // Adding monster to list
                 monsterList.add(monster);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
+        // return monster list
         return monsterList;
     }
 
@@ -140,12 +140,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         Integer.parseInt(cursor.getString(2))
                 );
                 monster.setId(Integer.parseInt(cursor.getString(0)));
-                // Adding contact to list
+                // Adding monster to list
                 monsterList.add(monster);
             } while (cursor.moveToNext());
         }
 
-        // return contact list
+        // return monster list
         return monsterList;
     }
 
