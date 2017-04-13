@@ -55,13 +55,13 @@ public class CreateMonster extends AppCompatActivity {
         monster = intent.getParcelableExtra(getString(R.string.monster_parcel_id));
         callerName = intent.getStringExtra(getString(R.string.sender_class_name));
 
-        if( callerName != null && callerName.equals( "CreateMonster"))
+        if( callerName != null && callerName.equals( "SearchMonsters")) // If caller is listview
         {
-            updateButton.setVisibility(View.INVISIBLE);
+            updateButton.setVisibility(View.INVISIBLE); //hide update button
         }
-        if(callerName != null && callerName.equals("ViewMonster"))
+        if(callerName != null && callerName.equals("ViewMonster")) // If caller is View Monster
         {
-            saveButton.setVisibility(View.INVISIBLE);
+            saveButton.setVisibility(View.INVISIBLE); //hide create button
         }
 
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -82,13 +82,13 @@ public class CreateMonster extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 createMonster();
-                if(callerName != null && callerName.equals("CreateMonster")) {
+                if(callerName != null && callerName.equals("SearchMonsters")) {
                     finish();
                 }
             }
         });
 
-
+        // If monster passed into intet fill in edit text
         if (monster != null) {
             nameEditText.setText(monster.getName());
             ageEditText.setText(Integer.toString(monster.getAge()));
@@ -98,6 +98,9 @@ public class CreateMonster extends AppCompatActivity {
         }
     }
 
+    /**
+     * Creates a monster based on field values
+     */
     private void createMonster() {
         monster = new Monster(nameEditText.getText().toString(),
                 Integer.parseInt(ageEditText.getText().toString()),
@@ -115,7 +118,10 @@ public class CreateMonster extends AppCompatActivity {
         }
 
     }
-
+    
+    /**
+     * Update the monster based on field values
+     */
     private void updateMonster() {
         monster.setName(nameEditText.getText().toString());
         monster.setAge(Integer.parseInt(ageEditText.getText().toString()));

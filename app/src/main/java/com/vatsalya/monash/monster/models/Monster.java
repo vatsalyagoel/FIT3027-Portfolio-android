@@ -8,7 +8,6 @@ import java.util.Locale;
 /**
  * Created by vatsalyagoel on 10/4/17.
  */
-
 public class Monster implements Parcelable {
 
     private long id;
@@ -107,6 +106,9 @@ public class Monster implements Parcelable {
         dest.writeInt(getHealth());
     }
 
+    /**
+     * A parcel creator to implement monster as a parcel
+     */
     public static final Parcelable.Creator<Monster> CREATOR
             = new Parcelable.Creator<Monster>() {
         public Monster createFromParcel(Parcel in) {
@@ -118,12 +120,20 @@ public class Monster implements Parcelable {
         }
     };
 
+    /**
+     *
+     * @return Returns the description of the monster
+     */
     @Override
     public String toString() {
         return String.format(Locale.getDefault(), "Name: %s\nAge: %d\nSpecies: %s\nAttackPower: %d\nHealth: %d",
                 getName(), getAge(), getSpecies(), getAttackPower(), getHealth());
     }
 
+    /**
+     *
+     * @return Returns a random value generated from attack power
+     */
     public int getAttackValue() {
         Double random = Math.random()*100;
         return getAttackPower() + random.intValue();

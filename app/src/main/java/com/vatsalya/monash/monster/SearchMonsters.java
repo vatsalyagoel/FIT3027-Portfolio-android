@@ -112,8 +112,11 @@ public class SearchMonsters extends AppCompatActivity {
         }
     }
 
+    /**
+     * Gets the number of monsters and sets screen title
+     */
     private void updateListCount() {
-        // Get total size of person list & set title
+        // Get total size of monster list & set title
         int numPeople = mainMonsterList.size();
         setTitle("Number of monsters: " + numPeople);
     }

@@ -18,14 +18,12 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // All Static variables
-    // Database Version
-    private static final int DATABASE_VERSION = 1;
 
-    // Database Name
-    private static final String DATABASE_NAME = "monsterDB";
+    private static final int DATABASE_VERSION = 1; // Database Version
 
-    // Monsters table name
-    private static final String TABLE_MONSTER = "monster";
+    private static final String DATABASE_NAME = "monsterDB"; // Database Name
+
+    private static final String TABLE_MONSTER = "monster"; // Monsters table name
 
     // Monsters Table Columns names
     private static final String KEY_ID = "id";
@@ -41,7 +39,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    // Creating Tables
+    /**
+     * Creating Tables
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_MONSTER_TABLE = "CREATE TABLE " + TABLE_MONSTER + "("
@@ -51,7 +51,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_MONSTER_TABLE);
     }
 
-    // Upgrading database
+    /**
+     * Upgrading database
+     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
@@ -61,12 +63,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Adding new monster
+    /**
+     * Adding new monster
+     */
     public long addMonster(Monster monster) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, monster.getName()); // Contact Name
+        values.put(KEY_NAME, monster.getName()); // Monster Name
         values.put(KEY_AGE, monster.getAge());
         values.put(KEY_SPECIES, monster.getSpecies());
         values.put(KEY_ATTACK_POWER, monster.getAttackPower());
@@ -79,7 +83,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
 
-    // Getting single monster
+    /**
+     * Getting single monster
+     */
     public Monster getMonster(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -98,7 +104,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return monster;
     }
 
-    // Getting All Monsters
+    /**
+     * Getting All Monsters
+     */
     public List<Monster> getAllMonsters() {
         List<Monster> monsterList = new ArrayList<Monster>();
         // Select All Query
@@ -124,6 +132,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return monsterList;
     }
 
+    /**
+     *
+     * @param queryString the query search string
+     * @return a list of monster that match the string
+     */
     public List<Monster> searchMonstersWithName(String queryString) {
         List<Monster> monsterList = new ArrayList<Monster>();
 
@@ -149,7 +162,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return monsterList;
     }
 
-    // Getting monsters Count
+    /**
+     * Getting monsters Count
+     */
     public int getMonstersCount() {
         String countQuery = "SELECT  * FROM " + TABLE_MONSTER;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -159,7 +174,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
-    // Updating single monster
+
+    /**
+     * Updating single monster
+     */
     public int updateMonster(Monster monster) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -175,7 +193,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[] { String.valueOf(monster.getId()) });
     }
 
-    // Deleting single monster
+    /**
+     * Deleting single monster
+     */
     public void deleteMonster(Monster monster) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_MONSTER, KEY_ID + " = ?",
